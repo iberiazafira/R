@@ -1,0 +1,16 @@
+data()
+
+attach(OrchardSprays)
+print(OrchardSprays)
+help("OrchardSprays")
+
+summary(OrchardSprays)
+Orchard2 <- split(OrchardSprays, OrchardSprays$treatment)
+summary(Orchard2$A)
+summary(Orchard2$B)
+summary(Orchard2$C)
+summary(Orchard2$D)
+summary(Orchard2$E)
+summary(Orchard2$F)
+summary(Orchard2$G)
+summary(Orchard2$H)
