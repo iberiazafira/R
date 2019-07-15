@@ -1,0 +1,57 @@
+data()
+help("airquality")
+summary(airquality)
+sapply(airquality, mean)
+install.packages("Hmisc")
+
+describe.matrix(airquality)
+install.packages("pastecs")
+attach(pastecs)
+library("pastecs")
+stat.desc(airquality)
+install.packages("psych")
+attach("psych")
+library("psych")
+describe(airquality)
+
+data(airquality)
+attach(airquality)
+airquality2<- airquality
+airquality2$MonthMod[Month > 8] <-"MonthTails"
+airquality2$MonthMod[Month > 5 & Month <=8 ] <-"MonthPeaks"
+airquality2$MonthMod[Month <= 5 ] <-"MonthTails"
+
+airquality2$TempMod <- ifelse(airquality2$Temp >77, c("TempHigh"), c("TempLow"))
+
+attach(airquality2)
+boxplot(Ozone~Month, data=airquality2, main="Ozone by Month")
+boxplot(Ozone~MonthMod, data=airquality2, main="Ozone by Month")
+
+boxplot(Ozone~TempMod, data=airquality2, main="Ozone by Temp (Below & Above 77F)")
+
+install.packages("gmodels")
+library("gmodels")
+CrossTable(airquality2$Ozone, airquality2$MonthMod)
+
+airquality2$OzoneMod[Ozone > 100] <-"OzoneUnhealthy"
+airquality2$OzoneMod[Ozone > 50 & Ozone <=100 ] <-"OzoneModerate"
+airquality2$OzoneMod[Ozone <= 50 ] <-"OzoneGood"
+
+print(airquality2$OzoneMod)
+
+library("gmodels")
+CrossTable(airquality2$OzoneMod, airquality2$MonthMod)
+
+install.packages("vcd")
+library(vcd)
+myairqualitytable <- xtabs(~Ozone+Solar.R, data=airquality2)
+chisq.test(myairqualitytable)
+
+myairqualitytable2 <- xtabs(~Temp+Solar.R, data=airquality2)
+chisq.test(myairqualitytable2)
+
+cor(airquality)
+
+attach(airquality2)
+plot(Solar.R, Ozone, main="Solar Radiation vs. Ozone in NY 1973",
+xlab="Solar Radiation (lang)", ylab="Ozone (ppb)", col="blue")
